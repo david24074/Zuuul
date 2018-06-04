@@ -1,0 +1,7 @@
+C:\Users\D.M\Documents\Schooljaar2017-2018\Periode 4 - Architectuur\TextAdventure\Zuuuul\Zuuuul\Zuuuul\bin\Debug\Zuuuul.exe.config
+C:\Users\D.M\Documents\Schooljaar2017-2018\Periode 4 - Architectuur\TextAdventure\Zuuuul\Zuuuul\Zuuuul\bin\Debug\Zuuuul.exe
+C:\Users\D.M\Documents\Schooljaar2017-2018\Periode 4 - Architectuur\TextAdventure\Zuuuul\Zuuuul\Zuuuul\bin\Debug\Zuuuul.pdb
+C:\Users\D.M\Documents\Schooljaar2017-2018\Periode 4 - Architectuur\TextAdventure\Zuuuul\Zuuuul\Zuuuul\obj\Debug\Zuuuul.csproj.CoreCompileInputs.cache
+C:\Users\D.M\Documents\Schooljaar2017-2018\Periode 4 - Architectuur\TextAdventure\Zuuuul\Zuuuul\Zuuuul\obj\Debug\Zuuuul.exe
+C:\Users\D.M\Documents\Schooljaar2017-2018\Periode 4 - Architectuur\TextAdventure\Zuuuul\Zuuuul\Zuuuul\obj\Debug\Zuuuul.pdb
+C:\Users\D.M\Documents\Schooljaar2017-2018\Periode 4 - Architectuur\TextAdventure\Zuuuul\Zuuuul\Zuuuul\obj\Debug\Zuuuul.csprojAssemblyReference.cache
