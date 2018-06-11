@@ -5,16 +5,19 @@ namespace ZuulCS
 	public class Game
 	{
 		private Parser parser;
-        private Room currentRoom;
-        private Player health;
+       // private Room currentRoom;
+        private Player player;
+
 
 
 
 		public Game ()
 		{
-			createRooms();
+			
 			parser = new Parser();
-		}
+            player = new Player();
+            createRooms();
+        }
 
 		private void createRooms()
 		{
@@ -41,7 +44,7 @@ namespace ZuulCS
 
 			office.setExit("west", lab);
 
-			 Room currentRoom = outside;  // start game outside
+            player.CurrentRoom = outside;  // start game outside
 		}
 
 
@@ -72,7 +75,8 @@ namespace ZuulCS
 			Console.WriteLine("Zuul is a new, incredibly boring adventure game.");
 			Console.WriteLine("Type 'help' if you need help.");
 			Console.WriteLine();
-			Console.WriteLine(currentRoom.getLongDescription());
+			Console.WriteLine(player.CurrentRoom.getLongDescription());
+            
 		}
 
 		/**
@@ -96,18 +100,19 @@ namespace ZuulCS
 					break;
 				case "go":
 					goRoom(command);
-					break;
+                    player.health -= 5;
+                    break;
 				case "quit":
 					wantToQuit = true;
 					break;
                 case "look":
-                    Console.WriteLine(currentRoom.getLongDescription());    
+                    Console.WriteLine(player.CurrentRoom.getLongDescription());    
                     break;
                 case "die":
                     Console.WriteLine("You died");
                     break;
                 case "health":
-                    Console.WriteLine(health);
+                    Console.WriteLine(player.health);
                     break;
 			}
 
@@ -145,13 +150,13 @@ namespace ZuulCS
 			string direction = command.getSecondWord();
             
 			// Try to leave current room.
-			Room nextRoom =  currentRoom.getExit(direction);
+			Room nextRoom = player.CurrentRoom.getExit(direction);
 
 			if (nextRoom == null) {
 				Console.WriteLine("There is no door to "+direction+"!");
 			} else {
-				currentRoom = nextRoom;
-				Console.WriteLine(currentRoom.getLongDescription());
+                player.CurrentRoom = nextRoom;
+				Console.WriteLine(player.CurrentRoom.getLongDescription());
 			}
 		}
 

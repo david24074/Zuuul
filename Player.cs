@@ -6,11 +6,14 @@ namespace ZuulCS
     {
         private Room currentRoom;
         private uint damage;
-        private uint health;
+        public uint health;
         private Boolean isAlive;
+
+        public Room CurrentRoom { get { return currentRoom; } set { currentRoom = value; } }
 
         public uint Health
         {
+
             get
             {
                 return health;
@@ -24,6 +27,19 @@ namespace ZuulCS
             }
         }
 
+        public uint Damage
+        {
+
+            get
+            {
+                return damage;
+            }
+            set
+            {
+                damage = 2;
+            }
+        }
+
         public Player()
         {
             isAlive = true;
@@ -32,7 +48,7 @@ namespace ZuulCS
         
         }
 
-        public void Update()
+        public void Death()
         {
             if (health <= 0)
             {
