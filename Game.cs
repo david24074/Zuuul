@@ -5,7 +5,7 @@ namespace ZuulCS
     public class Game
     {
         private Parser parser;
-        // private Room currentRoom;
+        //private Room currentRoom;
         private Player player;
 
 
@@ -112,6 +112,7 @@ namespace ZuulCS
                     {
                         wantToQuit = true;
                     }
+                    Console.WriteLine("Health: " + player.health);
                     break;
                 case "quit":
                     wantToQuit = true;
@@ -123,7 +124,7 @@ namespace ZuulCS
                     Console.WriteLine("You died");
                     break;
                 case "health":
-                    Console.WriteLine(player.health);
+                    Console.WriteLine("Health: " + player.health);
                     break;
             }
 
@@ -166,6 +167,7 @@ namespace ZuulCS
             if (nextRoom == null)
             {
                 Console.WriteLine("There is no door to " + direction + "!");
+                player.health += 2;
             }
             else
             {
