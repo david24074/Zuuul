@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace ZuulCS
 {
     public class Player
@@ -9,7 +10,22 @@ namespace ZuulCS
         public uint health;
         private Boolean isAlive;
 
+        public List<string> Inventory1 = new List<string>();
         public Room CurrentRoom { get { return currentRoom; } set { currentRoom = value; } }
+
+
+        public void ListIt()
+        {
+            Inventory1.Add("Medkit");
+            Inventory1.Add("Shotgun");
+
+            foreach (string value in Inventory1)
+            {
+                Console.WriteLine(value);
+            }
+
+
+        }
 
         public uint Health
         {
@@ -20,10 +36,6 @@ namespace ZuulCS
             }
             set
             {
-                if (health <= 0)
-                {
-                    Console.WriteLine("You died");
-                }
             }
         }
 

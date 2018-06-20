@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ZuulCS
 {
@@ -7,9 +8,9 @@ namespace ZuulCS
         private Parser parser;
         //private Room currentRoom;
         private Player player;
-
-
-
+        public Player Inventory;
+        public Player Inventory1;
+        public Player value;
 
         public Game()
         {
@@ -119,6 +120,7 @@ namespace ZuulCS
                     break;
                 case "look":
                     Console.WriteLine(player.CurrentRoom.getLongDescription());
+                    player.ListIt();
                     break;
                 case "die":
                     Console.WriteLine("You died");
@@ -175,5 +177,6 @@ namespace ZuulCS
                 Console.WriteLine(player.CurrentRoom.getLongDescription());
             }
         }
+
     }
 }

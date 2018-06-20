@@ -47,6 +47,8 @@ namespace ZuulCS
 			returnstring += ".\n";
 			returnstring += getExitstring();
 			return returnstring;
+
+
 		}
 
 		/**
