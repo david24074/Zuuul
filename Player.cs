@@ -23,7 +23,7 @@ namespace ZuulCS
 
         public void ListIt()
         {
-            Inventory1.Add("Medkit");
+            
 
             foreach (string value in Inventory1)
             {
@@ -40,10 +40,7 @@ namespace ZuulCS
             }
         }
 
-        public void TakeItem(Inventory Inventory1)
-        {
-
-        }
+ 
 
         
 

@@ -8,15 +8,13 @@ namespace ZuulCS
         public bool Drink;
         private Parser parser;
         private Player player;
-
         public Player value;
         public Player PubInv;
-     
-
+        public Player inventory1;
 
         public Game()
         {
-           
+
             parser = new Parser();
             player = new Player();
             createRooms();
@@ -43,8 +41,8 @@ namespace ZuulCS
             theatre.setExit("west", outside);
 
             pub.setExit("east", outside);
-            pub.Items.Add(new Inventory("Vodka", 1, "Heals you because alcohol is healthy", true, true));
-           
+            pub.Items.Add(new Inventory("Vodka", 1, "Heals you because alcohol is healthy. ", true, true));
+
             lab.setExit("north", outside);
             lab.setExit("east", office);
 
@@ -54,7 +52,7 @@ namespace ZuulCS
             basement.Items.Add(new Inventory("Sword ", 3, "an old rusty sword. ", true, false));
             player.CurrentRoom = outside;  // start game outside
 
-            
+
         }
 
 
@@ -135,6 +133,9 @@ namespace ZuulCS
                 case "inventory":
                     player.ListIt();
                     break;
+                case "take":
+                    TakeItem();
+                    break;
             }
 
             return wantToQuit;
@@ -181,17 +182,27 @@ namespace ZuulCS
             else
             {
                 player.CurrentRoom = nextRoom;
-               
+
                 Console.WriteLine(player.CurrentRoom.getLongDescription());
                 foreach (Inventory Item in player.CurrentRoom.Items)
                 {
                     Console.WriteLine(Item.toString());
                 }
             }
+
+
         }
+        public void TakeItem()
 
- 
+        {
 
+            foreach (Inventory Item in player.CurrentRoom.Items)
+            {
+                player.Inventory1.Add(Item.toString());
+                Console.WriteLine("You take the item stored here ");
+                
+            }
 
+        }
     }
 }
