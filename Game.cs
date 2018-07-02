@@ -5,16 +5,18 @@ namespace ZuulCS
 {
     public class Game
     {
+        public bool Drink;
         private Parser parser;
-        //private Room currentRoom;
         private Player player;
-        public Player Inventory;
-        public Player Inventory1;
+
         public Player value;
+        public Player PubInv;
+     
+
 
         public Game()
         {
-
+           
             parser = new Parser();
             player = new Player();
             createRooms();
@@ -27,7 +29,7 @@ namespace ZuulCS
             // create the rooms
             outside = new Room("outside the main entrance of the university");
             theatre = new Room("in a lecture theatre");
-            pub = new Room("in the campus pub");
+            pub = new Room("in the campus pub,");
             lab = new Room("in a computing lab");
             office = new Room("in the computing admin office");
             basement = new Room("in the basement");
@@ -41,15 +43,18 @@ namespace ZuulCS
             theatre.setExit("west", outside);
 
             pub.setExit("east", outside);
-
+            pub.Items.Add(new Inventory("Vodka", 1, "Heals you because alcohol is healthy", true, true));
+           
             lab.setExit("north", outside);
             lab.setExit("east", office);
 
             office.setExit("west", lab);
 
             basement.setExit("up", outside);
-
+            basement.Items.Add(new Inventory("Sword ", 3, "an old rusty sword. ", true, false));
             player.CurrentRoom = outside;  // start game outside
+
+            
         }
 
 
@@ -120,13 +125,15 @@ namespace ZuulCS
                     break;
                 case "look":
                     Console.WriteLine(player.CurrentRoom.getLongDescription());
-                    player.ListIt();
                     break;
                 case "die":
                     Console.WriteLine("You died");
                     break;
                 case "health":
                     Console.WriteLine("Health: " + player.health);
+                    break;
+                case "inventory":
+                    player.ListIt();
                     break;
             }
 
@@ -174,9 +181,17 @@ namespace ZuulCS
             else
             {
                 player.CurrentRoom = nextRoom;
+               
                 Console.WriteLine(player.CurrentRoom.getLongDescription());
+                foreach (Inventory Item in player.CurrentRoom.Items)
+                {
+                    Console.WriteLine(Item.toString());
+                }
             }
         }
+
+ 
+
 
     }
 }

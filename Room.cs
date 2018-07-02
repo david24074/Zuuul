@@ -1,11 +1,17 @@
+using System;
 using System.Collections.Generic;
 
 namespace ZuulCS
 {
 	public class Room
 	{
-		private string description;
+        public List<string> Inventory2 = new List<string>();
+        private string description;
 		private Dictionary<string, Room> exits; // stores exits of this room.
+        public bool Drink;
+        public Player player;
+        public Game pub;
+        public List<Inventory> Items { get; set; } = new List<Inventory>();
 
 		/**
 	     * Create a room described "description". Initially, it has no exits.
@@ -46,16 +52,28 @@ namespace ZuulCS
 			returnstring += description;
 			returnstring += ".\n";
 			returnstring += getExitstring();
-			return returnstring;
-
-
+            return returnstring;
+           
 		}
 
-		/**
+
+        public void ListIt()
+        {
+            Inventory2.Add("Medkit");
+
+            foreach (string value in Inventory2)
+            {
+                Console.WriteLine("You have a " + value + " with you");
+            }
+
+            Drink = true;
+        }
+
+        /**
 	     * Return a string describing the room's exits, for example
 	     * "Exits: north, west".
 	     */
-		private string getExitstring()
+        private string getExitstring()
 		{
 			string returnstring = "Exits:";
 
@@ -71,11 +89,12 @@ namespace ZuulCS
 			return returnstring;
 		}
 
-		/**
+
+        /**
 	     * Return the room that is reached if we go from this room in direction
 	     * "direction". If there is no room in that direction, return null.
 	     */
-		public Room getExit(string direction)
+        public Room getExit(string direction)
 		{
 			if (exits.ContainsKey(direction)) {
 				return (Room)exits[direction];
@@ -84,5 +103,6 @@ namespace ZuulCS
 			}
 
 		}
-	}
+
+    }
 }
