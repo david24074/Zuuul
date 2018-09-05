@@ -10,10 +10,11 @@ namespace ZuulCS
         private Player player;
         public Player value;
         public Player PubInv;
-        public Player inventory1;
+
 
         public Game()
         {
+
 
             parser = new Parser();
             player = new Player();
@@ -25,23 +26,25 @@ namespace ZuulCS
             Room outside, theatre, pub, lab, office, basement;
 
             // create the rooms
-            outside = new Room("outside the main entrance of the university");
-            theatre = new Room("in a lecture theatre");
-            pub = new Room("in the campus pub,");
-            lab = new Room("in a computing lab");
-            office = new Room("in the computing admin office");
-            basement = new Room("in the basement");
+            outside = new Room("outside the main entrance of the university", false);
+            theatre = new Room("in a lecture theatre", false);
+            pub = new Room("in the campus pub,", false);
+            lab = new Room("in a computing lab", false);
+            office = new Room("in the computing admin office", false);
+            basement = new Room("in the basement", true);
 
             // initialise room exits
             outside.setExit("east", theatre);
             outside.setExit("south", lab);
             outside.setExit("west", pub);
+            pub.RoomInv.Add(new Vodka());
+            pub.RoomInv.Add(new Key());
+            pub.RoomInv.Add(new Crystal());
             outside.setExit("down", basement);
 
             theatre.setExit("west", outside);
 
             pub.setExit("east", outside);
-            pub.Items.Add(new Inventory("Vodka", 1, "Heals you because alcohol is healthy. ", true, true));
 
             lab.setExit("north", outside);
             lab.setExit("east", office);
@@ -49,7 +52,6 @@ namespace ZuulCS
             office.setExit("west", lab);
 
             basement.setExit("up", outside);
-            basement.Items.Add(new Inventory("Sword ", 3, "an old rusty sword. ", true, false));
             player.CurrentRoom = outside;  // start game outside
 
 
@@ -111,7 +113,6 @@ namespace ZuulCS
                     break;
                 case "go":
                     goRoom(command);
-                    player.health -= 2;
                     if (player.health <= 0)
                     {
                         wantToQuit = true;
@@ -123,18 +124,22 @@ namespace ZuulCS
                     break;
                 case "look":
                     Console.WriteLine(player.CurrentRoom.getLongDescription());
-                    break;
-                case "die":
-                    Console.WriteLine("You died");
+                    player.CurrentRoom.RoomInv.listItemsRoom(player.CurrentRoom.RoomInv);
                     break;
                 case "health":
                     Console.WriteLine("Health: " + player.health);
                     break;
-                case "inventory":
-                    player.ListIt();
-                    break;
                 case "take":
-                    TakeItem();
+                    player.CurrentRoom.RoomInv.Take(player.PlayerInv , command.getSecondWord());
+                    break;
+                case "drop":
+                    player.PlayerInv.Drop(player.CurrentRoom.RoomInv , command.getSecondWord());
+                    break;
+                case "use":
+                    use(command);
+                    break;
+                case "inventory":
+                    player.PlayerInv.listItemsPlayer(player.PlayerInv);
                     break;
             }
 
@@ -177,32 +182,79 @@ namespace ZuulCS
             if (nextRoom == null)
             {
                 Console.WriteLine("There is no door to " + direction + "!");
-                player.health += 2;
+            }
+            else if (nextRoom.locked) {
+                Console.WriteLine("The door is locked, you cannot enter without a key!");
             }
             else
             {
                 player.CurrentRoom = nextRoom;
-
+                Console.Clear();
                 Console.WriteLine(player.CurrentRoom.getLongDescription());
-                foreach (Inventory Item in player.CurrentRoom.Items)
-                {
-                    Console.WriteLine(Item.toString());
-                }
+                player.health -= player.damage;
             }
 
 
         }
-        public void TakeItem()
 
+        public void use(Command command)
         {
+            Item i = null;
 
-            foreach (Inventory Item in player.CurrentRoom.Items)
+            if (command.hasSecondWord())
             {
-                player.Inventory1.Add(Item.toString());
-                Console.WriteLine("You take the item stored here ");
-                
-            }
+                for (int b = player.PlayerInv.Inv.Count - 1; b >= 0; b--) {
+                    if (command.getSecondWord() == player.PlayerInv.Inv[b].name)
+                    {
+                        i = player.PlayerInv.Inv[b];
+                    }
+                }
 
-        }
+                if (command.hasThirdWord())
+                {
+
+                    Room roomToUnlock = player.CurrentRoom.getExit(command.getThirdWord());
+
+                    if (roomToUnlock == null)
+                    {
+
+                        Console.WriteLine("There is no door to unlock in that direction!");
+                        return;
+
+                    }
+                    else
+                    {
+
+                        if (i == null)
+                        {
+
+                            Console.WriteLine("This item does not exist in your inventory!");
+                            return;
+                        }
+                        else
+                        {
+
+                            i.use(roomToUnlock);
+                            return;
+                        }
+
+                    }
+
+                }
+                if (i == null)
+                {
+                    Console.WriteLine("That is not an item.");
+                }
+                else
+                {
+                    i.use(player);
+                }
+
+            } else
+            {
+                Console.WriteLine("Specify an item to use here.");
+            }
+        } 
+
     }
 }

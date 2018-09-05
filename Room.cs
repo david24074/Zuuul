@@ -5,23 +5,25 @@ namespace ZuulCS
 {
 	public class Room
 	{
-        public List<string> Inventory2 = new List<string>();
+        private Inventory roomInv;
+        public Boolean locked;
+
         private string description;
 		private Dictionary<string, Room> exits; // stores exits of this room.
-        public bool Drink;
-        public Player player;
-        public Game pub;
-        public List<Inventory> Items { get; set; } = new List<Inventory>();
 
-		/**
+        internal Inventory RoomInv { get => roomInv; }
+
+        /**
 	     * Create a room described "description". Initially, it has no exits.
 	     * "description" is something like "in a kitchen" or "in an open court
 	     * yard".
 	     */
-		public Room(string description)
+        public Room(string description, Boolean Locked)
 		{
 			this.description = description;
-			exits = new Dictionary<string, Room>();
+			exits = new Dictionary<string, Room>(); 
+            roomInv = new Inventory(3000);
+            locked = Locked;
 		}
 
 		/**
@@ -56,19 +58,6 @@ namespace ZuulCS
            
 		}
 
-
-        public void ListIt()
-        {
-            Inventory2.Add("Medkit");
-
-            foreach (string value in Inventory2)
-            {
-                Console.WriteLine("You have a " + value + " with you");
-            }
-
-            Drink = true;
-        }
-
         /**
 	     * Return a string describing the room's exits, for example
 	     * "Exits: north, west".
@@ -95,14 +84,25 @@ namespace ZuulCS
 	     * "direction". If there is no room in that direction, return null.
 	     */
         public Room getExit(string direction)
-		{
-			if (exits.ContainsKey(direction)) {
-				return (Room)exits[direction];
-			} else {
-				return null;
-			}
+        {
+            if (exits.ContainsKey(direction))
+            {
+                return (Room)exits[direction];
+            }
+            else
+            {
+                return null;
+            }
 
-		}
+        }
+        public void Locked() {
+            if (this.locked) {
+                this.locked = false;
+                Console.WriteLine("You opened the door, Congratulations!");
+            } else {
+                Console.WriteLine("The door has already been opened!");
+            }
+        }
 
     }
 }

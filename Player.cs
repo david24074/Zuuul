@@ -6,79 +6,35 @@ namespace ZuulCS
 
     {
         private Room currentRoom;
-        private uint damage;
-        public uint health;
-        private Boolean isAlive;
-        public Player player;
+        public int damage;
+        public int maxHealth;
+        public int health;
+        private Inventory playerInv;
 
-
-
-        public List<string> Inventory1 = new List<string>();
-        public List<string> Inventory2 = new List<string>();
-        private List<Inventory> inventory3 = new List<Inventory>();
-        public List<Inventory> Inventory3 { get { return inventory3; } set{inventory3 = value; } }
-        public List<string> pub1 = new List<string>();
         public Room CurrentRoom { get { return currentRoom; } set { currentRoom = value; } }
-
-
-        public void ListIt()
-        {
-            
-
-            foreach (string value in Inventory1)
-            {
-                Console.WriteLine("You have a " + value + " with you");
-            }
-        }
-
-        public void Listall()
-        {
-            
-            foreach (string value in Inventory2)
-            {
-                Console.WriteLine("Theres a " + value + " here");
-            }
-        }
-
- 
-
         
-
-        public uint Damage
-        {
-
-            get
-            {
-                return damage;
-            }
-            set
-            {
-                damage = 2;
-            }
-        }
+        internal Inventory PlayerInv { get => playerInv; }
 
         public Player()
         {
-            isAlive = true;
-            damage = 2;
-            health = 10;
-        
+            damage = 10;
+            health = 100;
+            maxHealth = 100;
+            playerInv = new Inventory(20);
         }
+        public void Heal(int amount) {
 
-        public void Death()
-        {
-            if (health <= 0)
-            {
-                isAlive = false;
+            if (health == maxHealth) {
+                Console.WriteLine("You already are at max health!");
+                return;
+            } else {
+                health += amount;
+
+                if (health > maxHealth) {
+                    health = maxHealth;
+                }
             }
-            if (isAlive == false)
-            {
-                
-            }
+
         }
-
-        
-
-
     }
 }
